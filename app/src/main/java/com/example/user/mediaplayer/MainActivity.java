@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.user.mediaplayer.backend.DbManager;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void show_music(View view) {
+        DbManager data = new DbManager(this);
+        data.create();
+
 
         Intent intent = new Intent(this, MusicList.class);
         startActivity(intent);

@@ -4,7 +4,7 @@
 package com.example.user.mediaplayer.backend;
 
     import android.content.Context;
-    import  android.os.Environment;
+    import android.os.Environment;
     import android.util.Log;
     import java.io.File;
 
@@ -20,14 +20,16 @@ public class DbManager {
 
 
   public void create() {
-    File dir = new File(Environment.DIRECTORY_MUSIC);
+
+    File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
     Log.e("hheythere", dir.getPath());
+    if(dir.listFiles() != null) {
     for(File file : dir.listFiles()) {
-      Log.e("hheythere", file.getName());
+      Log.e("hheythere", file.getPath());
     }
 
 
-
+    }
 
 
   }
