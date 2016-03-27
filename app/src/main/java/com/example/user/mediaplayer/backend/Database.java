@@ -3,6 +3,7 @@ package com.example.user.mediaplayer.backend;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.io.File;
 
 /**
  * Created by sakshaatchoyikandi on 16-03-26.
@@ -23,23 +24,22 @@ public class Database extends SQLiteOpenHelper {
          * Sample Statement:
          *
          * CREATE TABLE Users (
-         *  id INTEGER PRIMARY KEY AUTOINCREMENT,
+         *  id INTEGER PRIMARY KEY ,
          *  username TEXT NOT NULL,
          *  password TEXT NOT NULL);
          */
 
-    populate(this);
-
-    String CREATE_TABLE_USERS = "CREATE TABLE "
+    String CREATE_TABLE_SONGS = "CREATE TABLE "
         + "Songs" + "("
-        + "id" + "INTEGER PRIMARY KEY NOT NULL, "
+        + "id" + " INTEGER PRIMARY KEY AUTOINCREMENT, "
         + "Path" + " TEXT UNIQUE NOT NULL, "
-        + "Rank" + " INTEGER)";
+        + "Rank" + " LONG)";
 
-    db.execSQL(CREATE_TABLE_USERS);
+    db.execSQL(CREATE_TABLE_SONGS);
   }
 
-  protected void populate(Database data) {
+  protected void add_songs(Database db, File song) {
+    // add the spng, only change rank if the song is not a duplicate, being read again.
 
   }
 
