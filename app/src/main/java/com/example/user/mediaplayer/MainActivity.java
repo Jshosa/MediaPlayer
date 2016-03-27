@@ -8,14 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-<<<<<<< HEAD
-=======
+
 import com.example.user.mediaplayer.backend.DbManager;
->>>>>>> backend
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer song;
     int paused;
+    protected DbManager data = new DbManager(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +26,6 @@ public class MainActivity extends AppCompatActivity {
     display all music in playlist
      */
     public void show_music(View view) {
-<<<<<<< HEAD
-=======
-        DbManager data = new DbManager(this);
-        data.create();
-
-
->>>>>>> backend
         Intent intent = new Intent(this, MusicList.class);
         startActivity(intent);
     }
@@ -42,12 +34,15 @@ public class MainActivity extends AppCompatActivity {
     play song and make sure to not start multiple of same song
      */
     public void play_music(View view) {
+        Integer nextSong = data.nextSong();
         if (song == null) {
-            song = MediaPlayer.create(this, R.raw.ohyeah);
+            song = MediaPlayer.create(this, nextSong);
             song.start();
-        }else if (! song.isPlaying()){
+        } else if (!song.isPlaying()){
             song.seekTo(paused);
             song.start();
+        } else {
+            pause_music(view);
         }
     }
 
@@ -55,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     pause the song and store the paused time
      */
     public void pause_music(View view) {
-        song.pause();
-        paused = song.getCurrentPosition();
+        if (song != null) {
+            song.pause();
+            paused = song.getCurrentPosition();
+        }
     }
 
     /*
@@ -73,7 +70,19 @@ public class MainActivity extends AppCompatActivity {
     skip the current song to the next one
      */
     public void forward_music(View view) {
-        song.seekTo(song.getDuration());
+
+        Integer nextSong = data.nextSong();
+        if (song != null) {
+            song.seekTo(song.getDuration());
+            MediaPlayer song2 = MediaPlayer.create(getApplicationContext(), nextSong);
+            song.setNextMediaPlayer(song2);
+            try {
+                song2.prepare();
+            } catch (Exception e) {
+            }
+
+            song = song2;
+        }
     }
 
     /*
@@ -81,5 +90,11 @@ public class MainActivity extends AppCompatActivity {
      */
     public void like_music(View view) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        song.release();
     }
 }
