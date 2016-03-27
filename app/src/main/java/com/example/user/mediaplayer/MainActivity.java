@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+<<<<<<< HEAD
+=======
+import com.example.user.mediaplayer.backend.DbManager;
+>>>>>>> backend
 
 public class MainActivity extends AppCompatActivity {
     MediaPlayer song;
@@ -23,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
     display all music in playlist
      */
     public void show_music(View view) {
+<<<<<<< HEAD
+=======
+        DbManager data = new DbManager(this);
+        data.create();
+
+
+>>>>>>> backend
         Intent intent = new Intent(this, MusicList.class);
         startActivity(intent);
     }
